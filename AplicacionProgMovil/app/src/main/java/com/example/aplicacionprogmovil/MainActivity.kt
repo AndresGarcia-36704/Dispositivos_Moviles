@@ -205,4 +205,4 @@ fun BotonCalculadora(
     ) {
         Text(text = label, fontSize = 24.sp, fontWeight = FontWeight.Bold)
     }
-}
+} 
