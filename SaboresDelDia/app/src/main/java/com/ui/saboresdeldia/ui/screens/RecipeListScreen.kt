@@ -11,9 +11,10 @@ import com.ui.saboresdeldia.ui.components.RecipeCard
 @Composable
 fun RecipeListScreen() {
     val recipes = RecipeRepository.getRecipes()
+
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(recipes) { recipe ->
-            RecipeCard(recipe)
+            RecipeCard(recipe = recipe)
         }
     }
 }

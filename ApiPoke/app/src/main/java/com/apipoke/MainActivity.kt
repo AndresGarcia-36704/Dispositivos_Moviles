@@ -16,14 +16,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Inicializar Retrofit con base URL de la PokéAPI
         pokeApi = Retrofit.Builder()
             .baseUrl("https://pokeapi.co/api/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(PokeapiService::class.java)
 
-        // Establecer la UI con Jetpack Compose y tu tema
         setContent {
             ApiPokeTheme {
                 PokemonScreen(pokeApi = pokeApi)

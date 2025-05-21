@@ -10,8 +10,8 @@ android {
 
     defaultConfig {
         applicationId = "com.ui.saboresdeldia"
-        minSdk = 21
-        targetSdk = 34
+        minSdk = 30
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
     }
@@ -21,27 +21,44 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.kotlin.get()
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
 
+    // AndroidX y Compose
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation("io.coil-kt:coil-compose:2.5.0")
 
+    // Imágenes con Coil
+    implementation(libs.coil.compose)
+
+    // Debug
     debugImplementation(libs.androidx.ui.tooling)
-    implementation(libs.androidx.monitor)
+    debugImplementation(libs.androidx.ui.test.manifest)
 
+    // Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit.ktx)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
 }

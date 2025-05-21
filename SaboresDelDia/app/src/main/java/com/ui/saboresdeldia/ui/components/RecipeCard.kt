@@ -16,18 +16,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.ui.saboresdeldia.R
 import com.ui.saboresdeldia.model.Recipe
-import com.ui.saboresdeldia.ui.theme.SaboresDelDiaTheme
 
 @Composable
 fun RecipeCard(recipe: Recipe) {
     var expanded by remember { mutableStateOf(false) }
 
-    // Animación de rebote para el botón
     val bounceScale by animateFloatAsState(
         targetValue = if (expanded) 1.05f else 1f,
         animationSpec = spring(
@@ -39,7 +36,6 @@ fun RecipeCard(recipe: Recipe) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .wrapContentHeight()
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .animateContentSize(),
         shape = RoundedCornerShape(20.dp),
@@ -52,24 +48,20 @@ fun RecipeCard(recipe: Recipe) {
             } else {
                 rememberAsyncImagePainter(
                     model = recipe.imageUrl,
-                    placeholder = painterResource(id = R.drawable.placeholder),
-                    error = painterResource(id = R.drawable.placeholder)
+                    placeholder = painterResource(R.drawable.placeholder),
+                    error = painterResource(R.drawable.placeholder)
                 )
             }
 
-            Box(
+            Image(
+                painter = imagePainter,
+                contentDescription = recipe.title,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(16f / 9f)
                     .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
-            ) {
-                Image(
-                    painter = imagePainter,
-                    contentDescription = recipe.title,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
+            )
 
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
@@ -111,19 +103,5 @@ fun RecipeCard(recipe: Recipe) {
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun RecipeCardPreview() {
-    SaboresDelDiaTheme {
-        val fakeRecipe = Recipe(
-            title = "Día de Prueba",
-            description = "Una pequeña descripción del platillo.",
-            details = "Receta detallada, ingredientes y pasos.",
-            imageUrl = "" // Placeholder por defecto
-        )
-        RecipeCard(recipe = fakeRecipe)
     }
 }
